@@ -29,9 +29,9 @@ There is no validation on the DTO itself, only on the booking model. The only re
 public record Request(String name, Long roomID, int count) {
 }
 ### Task 2 — /40
-**My mark:** 35 <br>
+**My mark:** 30 <br>
 **Evidence from the original code:**<br>
-I use OpenFeign to retrieve the selected room from the endpoint and reject the bookings where the attendees exceed the room capacity.<br>
+I use OpenFeign to retrieve the selected room from the endpoint and reject the bookings where the attendees exceed the room capacity. But I did not catch the exception thrown when an incorrect id for room is put in.<br>
 Room room = bookingClient.getRoom(request.roomID());<br>
 if (request.count()> room.getCapacity())<br>
 {<br>
@@ -63,7 +63,7 @@ response.setCount(booking.getCount());<br>
 response.setStatus(booking.isStatus());<br>
 return response;<br>
 
-**Total self-assessed original examination mark: 85/100**
+**Total self-assessed original examination mark: 80/100**
 
 **Checkpoint:** Commit this completed self-assessment as the **first review commit in your new repository**, before you modify or add application code. The lecturer decides the official original examination mark.
 
@@ -78,27 +78,51 @@ The validation for the request dto was not setup, so I changed the request recor
 The annotation thats needed in the controller to actually run the verification to make sure that the input followed the rules was also not there so I added the @Valid annotation to the create method in the booking controller.
 
 **Problem and correction 2:**
-I was returning a 409 a conflict, error code when the number of attendees exceeded the capacity of a room instead of the appropriate 400 bad request code. So I just switched it to 400.
+Try catch if the room id of a booking does not exist, try the method of getting the id by OpenFeign call if that returns an error catch it and throw a new status exception.
 
 
 **Problem and correction 3 (optional):**
-I noticed that I also only had the count of attendees set to be a positive number only, so I added the @NotNull to make sure it also could not be empty.
+I was returning a 409 a conflict, error code when the number of attendees exceeded the capacity of a room instead of the appropriate 400 bad request code. So I just switched it to 400.
 
 ## 3. API testing and evidence
 
 Use Swagger UI or another HTTP client. For **at least four meaningful checks**, record the request/input, expected result, actual HTTP status/response, and pass/fail. Include unsuccessful cases; a running application alone is not enough.
 
 **Test 1 — successful booking request:**
-- Request / input:
-- Expected:
-- Actual HTTP status / body:
-- Pass / fail:
+- Request / input:<br>
+{<br>
+  "name": "SuperMacs",<br>
+  "roomID": 1,<br>
+  "count": 15<br>
+  }<br>
+- Expected: 201 <br>
+  {<br>
+  "id": 1,<br>
+  "name": "SuperMacs",<br>
+  "count": 15,<br>
+  "roomID": 1,<br>
+  "status": true<br>
+  }<br>
+- Actual HTTP status / body: 201 <br>
+{<br>
+    "id": 1,<br>
+    "name": "SuperMacs",<br>
+    "count": 15,<br>
+    "roomID": 1,<br>
+    "status": true<br>
+    }<br>
+Pass / fail: Pass
 
 **Test 2 — invalid input or excessive attendee count:**
-- Request / input:
-- Expected:
-- Actual HTTP status / body:
-- Pass / fail:
+- Request / input:<br>
+  {<br>
+  "name": "Dunnes",<br>
+  "roomID": 1,<br>
+  "count": 500<br>
+  }<br>
+- Expected: 400
+- Actual HTTP status / body: 400
+- Pass / fail: Pass
 
 **Test 3 — missing booking or room:**
 - Request / input:

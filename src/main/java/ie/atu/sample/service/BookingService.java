@@ -1,5 +1,6 @@
 package ie.atu.sample.service;
 
+import feign.FeignException;
 import ie.atu.sample.dto.Responses;
 import ie.atu.sample.client.BookingClient;
 import ie.atu.sample.dto.Room;
@@ -27,8 +28,13 @@ public class BookingService {
     }
 
     public Booking create(Request request){
+        Room room;
+        try {
+             room = bookingClient.getRoom(request.roomID());
+        } catch (FeignException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room Not Found");
+        }
 
-        Room room = bookingClient.getRoom(request.roomID());
         if (request.count()> room.getCapacity())
         {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room Capacity Exceeded");
