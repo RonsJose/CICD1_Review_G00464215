@@ -31,7 +31,7 @@ public class BookingService {
         Room room = bookingClient.getRoom(request.roomID());
         if (request.count()> room.getCapacity())
         {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Room Capacity Exceeded");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room Capacity Exceeded");
         }
 
         Booking bookingEntity = new Booking();
