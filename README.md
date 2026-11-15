@@ -95,22 +95,8 @@ Use Swagger UI or another HTTP client. For **at least four meaningful checks**, 
   "roomID": 1,<br>
   "count": 15<br>
   }<br>
-- Expected: 201 <br>
-  {<br>
-  "id": 1,<br>
-  "name": "SuperMacs",<br>
-  "count": 15,<br>
-  "roomID": 1,<br>
-  "status": true<br>
-  }<br>
-- Actual HTTP status / body: 201 <br>
-{<br>
-    "id": 1,<br>
-    "name": "SuperMacs",<br>
-    "count": 15,<br>
-    "roomID": 1,<br>
-    "status": true<br>
-    }<br>
+- Expected: 201
+- Actual HTTP status / body: 201 
 Pass / fail: Pass
 
 **Test 2 — invalid input or excessive attendee count:**
@@ -125,16 +111,52 @@ Pass / fail: Pass
 - Pass / fail: Pass
 
 **Test 3 — missing booking or room:**
-- Request / input:
-- Expected:
-- Actual HTTP status / body:
-- Pass / fail:
+- Request / input:<br>
+{<br>
+  "name": "Tesco",<br>
+  "roomID": 245,<br>
+  "count": 5<br>
+  }<br>
+- Expected: 404
+- Actual HTTP status / body: 404
+- Pass / fail: Pass
 
 **Test 4 — requirement specific to my group:**
-- Request / input:
-- Expected:
-- Actual HTTP status / body:
-- Pass / fail:
+- Request / input:<br>
+{<br>
+  "name": "Tesco",<br>
+  "roomID": 2,<br>
+  "count": 11<br>
+  }<br>
+- Expected: 400
+- Actual HTTP status / body: 400
+- Pass / fail: Pass
+
+**Test 5 — requirement specific to my group:**
+- Request / input: 3
+- Expected: 404
+- Actual HTTP status / body: 404
+- Pass / fail: Pass
+
+**Test 6 — requirement specific to my group:**
+- Request / input: 1
+- Expected: 200<br>
+  {<br>
+  "id": 1,<br>
+  "name": "SuperMacs",<br>
+  "count": 15,<br>
+  "roomID": 1,<br>
+  "status": true<br>
+  }<br>
+- Actual HTTP status / body: 200<br>
+  {<br>
+  "id": 1,<br>
+  "name": "SuperMacs",<br>
+  "count": 15,<br>
+  "roomID": 1,<br>
+  "status": true<br>
+  }<br>
+- Pass / fail: Pass
 
 **Group A:** Demonstrate `GET /api/bookings/search?roomName=...` using an exact room name, bookings ordered by attendee count descending, and an empty list for no matches. Add checks if necessary to show all three behaviours.
 
