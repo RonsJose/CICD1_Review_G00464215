@@ -164,11 +164,20 @@ Pass / fail: Pass
 
 ## 4. Reflection
 
-**What did I understand during the examination but struggle to implement?**
+**What did I understand during the examination but struggle to implement?**<br>
+Validation, I understood that I had to implement validation but I did not implement it. I did not have the @Valid annotation on the controller method, and I did not have the validation annotations on the request dto.
+<br>
+HTTP response codes, I understood them and implemented them about 50% right. I did not use the correct response code for when an incorrect input was entered.<br>
+I knew that giving an incorrect room id caused an internal server error even though the other service returned a 404. I did not understand why but now I've realised its because it gets handled as an uncaught run time exception which it thinks caused a server crash during the request.<br>
 
-**Which Spring Boot, JPA, validation, JPQL or OpenFeign concept became clearer after correcting my code? Give a specific example.**
+**Which Spring Boot, JPA, validation, JPQL or OpenFeign concept became clearer after correcting my code? Give a specific example.**<br>
+Validation, I don't think I'll forget to include the @Valid annotation again in the controller method. I also learned that I need to include the rules in not just the model but the dto thats taking the requests as well.<br>
+Handling errors thrown by openfeign without a global exception handler, using a try catch instead of letting it report back internal server errors.
 
-**What will I do differently in my next coding test or API development task?**
+**What will I do differently in my next coding test or API development task?**<br>
+Make sure I use the correct response code for the situation.<br>
+Use validation on the request DTO and use the @Valid on the method in the controller using the DTO so that it actually gets checked against the rules.<br>
+Handle OpenFeign exceptions using try catch so that it doesnt cause interal server errors instead of giving useful information like 404 or 400.
 
 ## Review lab assessment — 20 marks
 
