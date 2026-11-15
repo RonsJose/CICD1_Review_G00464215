@@ -74,10 +74,15 @@ Start from a **fresh copy of the starter template for your own exam group**, in 
 Describe **two or three important problems** in your original code. For each, explain what was wrong, which class or method you changed in the new project, and why the corrected approach works.
 
 **Problem and correction 1:**
+The validation for the request dto was not setup, so I changed the request record to include the appropriate validation annotations, this way it actually looks at the dto for rules instead of giving internal server errors when it tries to save the information from the request to the database and instead gives 400 bad request code.<br>
+The annotation thats needed in the controller to actually run the verification to make sure that the input followed the rules was also not there so I added the @Valid annotation to the create method in the booking controller.
 
 **Problem and correction 2:**
+I was returning a 409 a conflict, error code when the number of attendees exceeded the capacity of a room instead of the appropriate 400 bad request code. So I just switched it to 400.
+
 
 **Problem and correction 3 (optional):**
+I noticed that I also only had the count of attendees set to be a positive number only, so I added the @NotNull to make sure it also could not be empty.
 
 ## 3. API testing and evidence
 
