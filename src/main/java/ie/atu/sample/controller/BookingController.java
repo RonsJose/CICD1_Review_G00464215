@@ -4,6 +4,7 @@ import ie.atu.sample.dto.Responses;
 import ie.atu.sample.model.Booking;
 import ie.atu.sample.dto.Request;
 import ie.atu.sample.service.BookingService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class BookingController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Booking create(@RequestBody Request booking) {
+    public Booking create(@Valid @RequestBody Request booking) {
         return  service.create(booking);
     }
 

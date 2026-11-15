@@ -23,6 +23,7 @@ public class Booking {
     @NotBlank
     private String name;
     @Positive
+    @NotNull
     private int count;
     @NotNull
     private Long roomID;
